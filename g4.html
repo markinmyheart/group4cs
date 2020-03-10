@@ -1,0 +1,66 @@
+<html>
+  <head>
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+	   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+	   <script src="agentmaps.js"></script>
+	  <script src="geojson.js"></script>
+	  <style>
+		  #mapid { height: 512px;
+		  width: 512px; }
+	  </style>
+  </head>
+  <body>
+	  <div id="mapid"></div>
+  </body>
+	<script>
+		var animation_interval_input = document.getElementById("animation_interval"),
+		speed_controller_input = document.getElementById("speed_controller"),
+		infection_probability_input = document.getElementById("infection_probability");
+		
+		var mymap = L.map('mapid').setView([1.3521, 103.8198], 13);
+		L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiY3plbm5pZSIsImEiOiJjazdqcjA4aGcwcXphM3Bsbjk0emJhbmp2In0.Nd83dTXUudYzUuYmEQ-LSQ', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1
+}).addTo(mymap);
+		/*
+	let map_data = SingaporeMap; // from https://data.gov.sg/organization/singapore-land-authority?res_format=KML
+	let bounding_points = [[103.5955810546875,1.4672010726372902], [104.04121398925781,1.2193903597622147]];
+	
+	let map = L.map("demo_map").fitBounds(bounding_points);
+	L.tileLayer(
+    "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+        attribution: "Thanks to <a href=\"http://openstreetmap.org\">OpenStreetMap</a> community",
+    }
+).addTo(mymap);
+		
+	/*let agentmap = L.A.agentmap(map);
+	agentmap.buildingify(map_data, bounding_points);
+	agentmap.agentify(50, agentmap.seqUnitAgentMaker);
+		
+	agentmap.controller = function() {
+    if (agentmap.state.ticks % 300 === 0) {
+        agentmap.agents.eachLayer(function(agent) {
+            let random_index = Math.floor(agentmap.units.count() * Math.random()),
+            random_unit = agentmap.units.getLayers()[random_index],
+            random_unit_id = agentmap.units.getLayerId(random_unit),
+            random_unit_center = random_unit.getBounds().getCenter();
+
+            agent.scheduleTrip(random_unit_center, {type: "unit", id: random_unit_id}, 1, false, true);
+        }
+    }
+
+    agent.moveIt();
+	}
+	}
+	
+	agentmap.run();
+	</script>
+</html>
